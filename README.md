@@ -201,7 +201,7 @@ docker-compose up -d
 
 ### Website
 
-You should see the "Hello, world!" page in your browser. If not, please check if your PHP installation satisfies FuelPHP's requirements.
+You should see the "Welcome! You have successfully installed the Fuel PHP Framework." page in your browser. If not, please check if your PHP installation satisfies FuelPHP's requirements.
 
 ```
 https://example.com
@@ -235,26 +235,45 @@ add or remove code in the ```./webserver/templates/nginx.conf.template``` file f
 #### Database
 
 ```
-$db=new DB\SQL(
-    'mysql:host=database;port=3306;dbname=${DB_NAME}',
-    '${DB_USER}',
-    '${DB_PASSWORD}'
-);
+// a MariaDB/MySQL driver configuration
+'development' => array(
+    'type'           => 'mysqli',
+    'connection'     => array(
+        'hostname'       => 'database',
+        'port'           => '3306',
+        'database'       => '${DB_NAME}',
+        'username'       => '${DB_USER}',
+        'password'       => '${DB_PASSWORD}',
+        'persistent'     => false,
+        'compress'       => false,
+    ),
+    'identifier'     => '`',
+    'table_prefix'   => '',
+    'charset'        => 'utf8',
+    'enable_cache'   => true,
+    'profiling'      => false,
+    'readonly'       => false,
+),
 ```
 
-[https://fatfreeframework.com/3.8/databases](https://fatfreeframework.com/3.8/databases)
+[https://fuelphp.com/docs/classes/database/introduction.html](https://fuelphp.com/docs/classes/database/introduction.html)
 
 [https://mariadb.com/kb/en/configuring-mariadb-with-option-files/](https://mariadb.com/kb/en/configuring-mariadb-with-option-files/)
 
-#### Redis and HTTP Caching
+#### Redis and Cache
 
-There is a good Cache Engine User Guide that covers how the cache engine works and gives you tips to improve your application and your database queries, as they can be cached by F3 as well. You really should have read it.
+For every Redis database connection there must be a config in redis array in ```./fuelphp/webapp/fuel/app/config/<environment>/db.php```.
+Configuration options and explanation are listed below. Every config requires to contain a hostname and a port.
 
 Redis host = redis
 
 Redis host port = 6379
 
-[https://fatfreeframework.com/3.8/cache](https://fatfreeframework.com/3.8/cache)
+[https://fuelphp.com/docs/classes/redis.html](https://fuelphp.com/docs/classes/redis.html)
+
+The cache class's defaults are configured through the ```./fuelphp/webapp/fuel/core/config/cache.php``` configuration file.
+
+[https://fuelphp.com/docs/classes/cache/config.html](https://fuelphp.com/docs/classes/cache/config.html)
 
 ### phpMyAdmin
 
