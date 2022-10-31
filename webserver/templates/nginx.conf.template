@@ -39,17 +39,33 @@ server {
 
 	location ~ \.php$ {
 		fastcgi_pass docker_fuelphp;
-		fastcgi_index index.php;
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		include fastcgi_params;
+		fastcgi_index	index.php;
+		#fastcgi_param	FUEL_ENV	"production";
+		fastcgi_param	SCRIPT_FILENAME	$document_root$fastcgi_script_name;
+		include	fastcgi_params;
 	}
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
 	location ~/\. {
 		deny all;     
 		log_not_found off;
-	}	
+	}
+	#
+	location ~ /.well-known {
+		allow all;
+	}
+	#
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
+	#
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
 	#
 	access_log off;
-	error_log  /var/log/nginx/${NGINX_HOST}.error.log error;
+	error_log  /var/log/nginx/${NGINX_HOST}-443.error.log error;
 }
