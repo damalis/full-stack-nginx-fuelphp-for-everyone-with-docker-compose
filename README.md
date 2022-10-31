@@ -37,6 +37,13 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 - [Manual Configuration and Installation](#manual)
 - [Portainer Installation](#portainer)
 - [Usage](#usage)
+	- [Website](#website)
+	- [Webserver](#webserver)
+	- [Database](#database)
+	- [Redis](#redis)
+	- [Cache](#cache)
+	- [phpMyAdmin](#phpmyadmin)
+	- [backup](#backup)					  
 
 ## Automatic
 
@@ -195,7 +202,7 @@ You can now use the `up` command:
 docker-compose up -d
 ```
 
-#### Docker run reference
+### Docker run reference
 
 [https://docs.docker.com/engine/reference/run/](https://docs.docker.com/engine/reference/run/)
 
@@ -207,21 +214,17 @@ You should see the "Welcome! You have successfully installed the Fuel PHP Framew
 https://example.com
 ```
 
-add or remove code in the ```./php-fpm/php/conf.d/security.ini``` file for custom php.ini configurations
+add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini configurations
 
 [https://www.php.net/manual/en/configuration.file.php](https://www.php.net/manual/en/configuration.file.php)
 
-add or remove code in the ```./php-fpm/php-fpm.d/z-www.conf``` file for php-fpm configurations
+You should make changes custom host configurations ```./php-fpm/php-fpm.d/z-www.conf``` then must restart service, FPM uses php.ini syntax for its configuration file - php-fpm.conf, and pool configuration files.
 
-Or you should make changes custom host configurations then must restart service
+[https://www.php.net/manual/en/install.fpm.configuration.php](https://www.php.net/manual/en/install.fpm.configuration.php)
 
 ```
 docker container restart fuelphp
 ```
-
-FPM uses php.ini syntax for its configuration file - php-fpm.conf, and pool configuration files.
-
-[https://www.php.net/manual/en/install.fpm.configuration.php](https://www.php.net/manual/en/install.fpm.configuration.php)
 
 add and/or remove fuelphp site folders and files with any ftp client program in ```./fuelphp/webapp``` folder.
 <br />You can also visit `https://example.com` to access website after starting the containers.
@@ -260,7 +263,7 @@ add or remove code in the ```./webserver/templates/nginx.conf.template``` file f
 
 [https://mariadb.com/kb/en/configuring-mariadb-with-option-files/](https://mariadb.com/kb/en/configuring-mariadb-with-option-files/)
 
-#### Redis and Cache
+#### Redis
 
 For every Redis database connection there must be a config in redis array in ```./fuelphp/webapp/fuel/app/config/<environment>/db.php```.
 Configuration options and explanation are listed below. Every config requires to contain a hostname and a port.
@@ -270,6 +273,8 @@ Redis host = redis
 Redis host port = 6379
 
 [https://fuelphp.com/docs/classes/redis.html](https://fuelphp.com/docs/classes/redis.html)
+
+#### Cache
 
 The cache class's defaults are configured through the ```./fuelphp/webapp/fuel/core/config/cache.php``` configuration file.
 
